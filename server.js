@@ -80,13 +80,13 @@ function gateKeeper(req, res, next) {
   next();
 }
 
-
+app.use(gateKeeper);
 // Add the middleware to your app!
 
 // this endpoint returns a json object representing the user making the request,
 // IF they supply valid user credentials. This endpoint assumes that `gateKeeper` 
 // adds the user object to the request if valid credentials were supplied.
-app.get("/api/users/me", gateKeeper, (req, res) => {
+app.get("/api/users/me", (req, res) => {
   // send an error message if no or wrong credentials sent
   if (req.user === undefined) {
     return res.status(403).json({message: 'Must supply valid user credentials'});
